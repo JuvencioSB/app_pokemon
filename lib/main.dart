@@ -17,20 +17,15 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pokemon ddpp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider(
-        create: (context) => GetIt.instance<PokemonCubit>(),
-        child: PokemonPage(),
-      ),
-    );
-  }
-}
+   @override Widget build(BuildContext context) {
+     return MaterialApp.router( 
+      title: 'Flutter Demo', theme: ThemeData( 
+        primarySwatch: Colors.blue, 
+        ),
+         routerConfig: router,
+          );
+           } 
+            }
 
 final GoRouter router = GoRouter(
   routes: [
@@ -39,7 +34,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) => HomeScreen(),
     ),
     GoRoute(
-      path: '/pokemon/:id',
+      path: '/pokemon/',
       builder: (context, state) {
         return PokemonPage();
       },
