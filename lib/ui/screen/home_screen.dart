@@ -26,7 +26,11 @@ class HomeScreen extends StatelessWidget {
                 itemCount: state.pokemons.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(state.pokemons[index].name),
+                    subtitle: Container(
+                      child: Image.network(state.pokemons[index].imagen),
+                    ),
+                    title: Text(state.pokemons[index].nombre),
+                    onTap: () {},
                   );
                 },
               );
@@ -40,7 +44,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          pokemonCubit.fetchPokemons();
+          pokemonCubit.CargarPokemons();
         },
         child: Icon(Icons.refresh),
       ),

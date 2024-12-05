@@ -1,4 +1,5 @@
 import 'package:app_pokemon/module/pokemon.dart';
+import 'package:app_pokemon/module/pokemon_detalle.dart';
 
 abstract class PokemonState {}
 
@@ -7,7 +8,7 @@ class PokemonInitial extends PokemonState {}
 class PokemonLoading extends PokemonState {}
 
 class PokemonLoaded extends PokemonState {
-  final List<Pokemon> pokemons;
+  final List<Info_pokemo> pokemons;
 
   PokemonLoaded(this.pokemons);
 }
