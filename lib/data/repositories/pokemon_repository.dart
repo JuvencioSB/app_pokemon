@@ -42,49 +42,12 @@ class PokemonRepository {
     await infoPokemoDao.insertPokemon(infoPokemos);
   }*/
   Future<void> saveInfoPokemo(Info_pokemo infoPokemo) async {
+    print(infoPokemo.nombre.toString());
     final infoPokemoDao = _database.pokemonDao;
     await infoPokemoDao.insertPokemon(infoPokemo);
   }
 
-  Future<List<dynamic>> getdatos(String name) async {
-    final response = await _apiService.getdatos("emolga");
-    if (response.statusCode == 200) {
-      final List<dynamic> data = response.data['types'];
-      print("Los  response" + response.data[{}].toString());
-      //final pokemons = data.map((json) => Pokemon.fromJson(json)).toList();
-      print("Conexion exitsa");
-      print("Practica   " + data[0]["type"].toString());
-      //   for (var v in pokemons) {
-      obtenerName(response);
-      obtnerSprite(response);
-      obtenerTipo(response);
-      print("Pruebas");
-
-      return data;
-      // }
-    } else {
-      throw Exception('Error al obtener los Pokémon');
-    }
-  }
-
   Future<List<Info_pokemo>> getPokemonsFromDatabase() async {
     return await _database.pokemonDao.findAllPokemons();
-  }
-
-  void obtenerName(dynamic response) async {
-    dynamic data = response.data['name'];
-    print(data.toString());
-  }
-
-  Future<void> obtnerSprite(dynamic response) async {
-    dynamic data = response.data['sprites'];
-    print(data["other"]["dream_world"]["front_default"].toString());
-  }
-
-  void obtenerTipo(dynamic response) async {
-    dynamic data = response.data['types'];
-    for (var type in data) {
-      print(type["type"].toString());
-    }
   }
 }
