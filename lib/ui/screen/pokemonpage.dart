@@ -1,4 +1,3 @@
-import 'package:app_pokemon/module/pokemon.dart';
 import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

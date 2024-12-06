@@ -1,4 +1,3 @@
-import 'package:app_pokemon/data/dao/pokemon_dao.dart';
 import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_pokemon/data/services/api_service.dart';
