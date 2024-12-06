@@ -8,9 +8,6 @@ import 'package:app_pokemon/injectable_config.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-
   await getIt.allReady();
   configureDependencies(); // Inicializa las dependencias
   runApp(MyApp());
