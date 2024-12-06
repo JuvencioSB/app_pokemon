@@ -20,6 +20,27 @@ class PokemonCubit extends Cubit<PokemonState> {
     }
   }
 
+  void loadLocalInfoPokemos() async {
+    try {
+      emit(PokemonLoading());
+      final infoPokemos = await repository.getPokemons();
+      emit(PokemonLoaded(infoPokemos));
+    } catch (e) {
+      emit(PokemonError(e.toString()));
+    }
+  }
+
+  void saveInfoPokemo(Info_pokemo infoPokemo) async {
+    try {
+      await repository.saveInfoPokemo(infoPokemo);
+      final infoPokemos = await repository.getPokemons();
+      emit(PokemonLoaded(infoPokemos));
+      print("Seguardo el pokemon");
+    } catch (e) {
+      emit(PokemonError(e.toString()));
+    }
+  }
+
 //Metodo para puebas
   Future<void> imprimirdatos() async {
     try {

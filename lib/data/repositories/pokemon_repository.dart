@@ -1,3 +1,4 @@
+import 'package:app_pokemon/data/dao/pokemon_dao.dart';
 import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_pokemon/data/services/api_service.dart';
@@ -34,6 +35,16 @@ class PokemonRepository {
       }
     }
     return pokemons;
+  }
+
+  /* Future<void> saveInfoPokemos(List<Info_pokemo> infoPokemos) async {
+    final infoPokemoDao = _database.pokemonDao;
+    // Limpiar la tabla antes de guardar nuevos datos  await infoPokemoDao.deleteAllInfoPokemos();
+    await infoPokemoDao.insertPokemon(infoPokemos);
+  }*/
+  Future<void> saveInfoPokemo(Info_pokemo infoPokemo) async {
+    final infoPokemoDao = _database.pokemonDao;
+    await infoPokemoDao.insertPokemon(infoPokemo);
   }
 
   Future<List<dynamic>> getdatos(String name) async {
