@@ -1,17 +1,22 @@
+import 'package:floor/floor.dart';
+
+@Entity(tableName: 'info_pokemo')
 class Info_pokemo {
+  @primaryKey
   String nombre;
   String imagen;
+  @ignore
   List<Type> tipos;
   Info_pokemo(
       {required this.nombre, required this.imagen, required this.tipos});
 
   factory Info_pokemo.fromJson(dynamic json) {
-    print(json.data['name']);
-    print(json.data['sprites']["other"]["dream_world"]["front_default"]);
+    //print(json.data['name']);
+    //print(json.data['sprites']["other"]["dream_world"]["front_default"]);
     List<Type> Temp_Tipos = [];
     for (var element in json.data["types"]) {
       Temp_Tipos.add(Type.obtener(element));
-      print(element["type"]["name"].toString());
+      //print(element["type"]["name"].toString());
     }
     return Info_pokemo(
         imagen: json.data['sprites']["other"]["official-artwork"]
@@ -25,7 +30,9 @@ class Info_pokemo {
   }
 }
 
+@Entity(tableName: 'type')
 class Type {
+  @primaryKey
   String tipo;
   Type(this.tipo);
 

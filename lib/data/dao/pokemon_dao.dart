@@ -1,14 +1,14 @@
+import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:floor/floor.dart';
-import 'package:app_pokemon/module/pokemon.dart';
 
 @dao
 abstract class PokemonDao {
   @Query('SELECT * FROM Pokemon')
-  Future<List<Pokemon>> findAllPokemons();
+  Future<List<Info_pokemo>> findAllPokemons();
 
   @insert
-  Future<void> insertPokemon(Pokemon pokemon);
+  Future<void> insertPokemon(Info_pokemo pokemon);
 
   @delete
-  Future<void> deletePokemon(Pokemon pokemon);
+  Future<void> deletePokemon(Info_pokemo pokemon);
 }

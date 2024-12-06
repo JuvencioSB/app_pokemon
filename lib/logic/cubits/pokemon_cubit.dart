@@ -10,16 +10,6 @@ class PokemonCubit extends Cubit<PokemonState> {
 
   PokemonCubit(this.repository) : super(PokemonInitial());
 
-  /*void fetchPokemons() async {
-    try {
-      emit(PokemonLoading());
-      final pokemons = await repository.fetchPokemons();
-      emit(PokemonLoaded(pokemons));
-    } catch (e) {
-      emit(PokemonError(e.toString()));
-    }
-  }*/
-
   void CargarPokemons() async {
     try {
       emit(PokemonLoading());
@@ -30,6 +20,7 @@ class PokemonCubit extends Cubit<PokemonState> {
     }
   }
 
+//Metodo para puebas
   Future<void> imprimirdatos() async {
     try {
       List<Info_pokemo> func = await repository.getPokemons();

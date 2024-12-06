@@ -1,4 +1,5 @@
 import 'package:app_pokemon/module/pokemon.dart';
+import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_pokemon/data/database/app_database.dart';
@@ -17,7 +18,7 @@ class PokemonPage extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             final db = snapshot.data;
-            return FutureBuilder<List<Pokemon>>(
+            return FutureBuilder<List<Info_pokemo>>(
               future: db!.pokemonDao.findAllPokemons(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -30,7 +31,7 @@ class PokemonPage extends StatelessWidget {
                     itemCount: pokemons.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(pokemons[index].name),
+                        title: Text(pokemons[index].nombre),
                       );
                     },
                   );

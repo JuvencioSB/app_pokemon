@@ -1,7 +1,6 @@
 import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_pokemon/data/services/api_service.dart';
-import 'package:app_pokemon/module/pokemon.dart';
 import 'package:app_pokemon/data/database/app_database.dart';
 
 @injectable
@@ -9,7 +8,7 @@ class PokemonRepository {
   final ApiService _apiService;
   final AppDatabase _database;
   PokemonRepository(this._apiService, this._database);
-  Future<List<Pokemon>> fetchPokemons() async {
+  /* Future<List<Pokemon>> fetchPokemons() async {
     final response = await _apiService.getPokemons();
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data['results'];
@@ -22,7 +21,7 @@ class PokemonRepository {
     } else {
       throw Exception('Error al obtener los Pokémon');
     }
-  }
+  }*/
 
   Future<List<Info_pokemo>> getPokemons() async {
     List<Info_pokemo> pokemons = [];
@@ -58,7 +57,7 @@ class PokemonRepository {
     }
   }
 
-  Future<List<Pokemon>> getPokemonsFromDatabase() async {
+  Future<List<Info_pokemo>> getPokemonsFromDatabase() async {
     return await _database.pokemonDao.findAllPokemons();
   }
 

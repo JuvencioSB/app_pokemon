@@ -85,7 +85,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `url` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `info_pokemo` (`nombre` TEXT NOT NULL, `imagen` TEXT NOT NULL, PRIMARY KEY (`nombre`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `type` (`tipo` TEXT NOT NULL, PRIMARY KEY (`tipo`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -104,22 +106,20 @@ class _$PokemonDao extends PokemonDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _pokemonInsertionAdapter = InsertionAdapter(
+        _info_pokemoInsertionAdapter = InsertionAdapter(
             database,
-            'Pokemon',
-            (Pokemon item) => <String, Object?>{
-                  'id': item.id,
-                  'name': item.name,
-                  'url': item.url
+            'info_pokemo',
+            (Info_pokemo item) => <String, Object?>{
+                  'nombre': item.nombre,
+                  'imagen': item.imagen
                 }),
-        _pokemonDeletionAdapter = DeletionAdapter(
+        _info_pokemoDeletionAdapter = DeletionAdapter(
             database,
-            'Pokemon',
-            ['id'],
-            (Pokemon item) => <String, Object?>{
-                  'id': item.id,
-                  'name': item.name,
-                  'url': item.url
+            'info_pokemo',
+            ['nombre'],
+            (Info_pokemo item) => <String, Object?>{
+                  'nombre': item.nombre,
+                  'imagen': item.imagen
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -128,26 +128,27 @@ class _$PokemonDao extends PokemonDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Pokemon> _pokemonInsertionAdapter;
+  final InsertionAdapter<Info_pokemo> _info_pokemoInsertionAdapter;
 
-  final DeletionAdapter<Pokemon> _pokemonDeletionAdapter;
+  final DeletionAdapter<Info_pokemo> _info_pokemoDeletionAdapter;
 
   @override
-  Future<List<Pokemon>> findAllPokemons() async {
+  Future<List<Info_pokemo>> findAllPokemons() async {
     return _queryAdapter.queryList('SELECT * FROM Pokemon',
-        mapper: (Map<String, Object?> row) => Pokemon(
-            id: row['id'] as int?,
-            name: row['name'] as String,
-            url: row['url'] as String));
+        mapper: (Map<String, Object?> row) => Info_pokemo(
+            nombre: row['nombre'] as String,
+            imagen: row['imagen'] as String,
+            tipos: []));
   }
 
   @override
-  Future<void> insertPokemon(Pokemon pokemon) async {
-    await _pokemonInsertionAdapter.insert(pokemon, OnConflictStrategy.abort);
+  Future<void> insertPokemon(Info_pokemo pokemon) async {
+    await _info_pokemoInsertionAdapter.insert(
+        pokemon, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deletePokemon(Pokemon pokemon) async {
-    await _pokemonDeletionAdapter.delete(pokemon);
+  Future<void> deletePokemon(Info_pokemo pokemon) async {
+    await _info_pokemoDeletionAdapter.delete(pokemon);
   }
 }

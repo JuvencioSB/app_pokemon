@@ -13,7 +13,7 @@ class ApiService {
     return await _dio.get('pokemon');
   }
 
-  Future<Response> getdatos(String name) async {
-    return await _dio.get('pokemon/' + name);
+  Future<Response> getdatos(String id) async {
+    return await _dio.get('pokemon/' + id);
   }
 }
