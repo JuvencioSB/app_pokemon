@@ -33,7 +33,11 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ListTile(
                         subtitle: Container(
-                          child: Image.network(state.pokemons[index].imagen),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: 'assets/carga.gif',
+                            image: state.pokemons[index].imagen,
+                            fadeInDuration: Duration(seconds: 4),
+                          ),
                         ),
                         title: Text(state.pokemons[index].nombre),
                         onTap: () {
