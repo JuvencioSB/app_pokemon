@@ -22,14 +22,14 @@ Widget navigations(
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text('Home'),
+          title: Text('Inicio'),
           onTap: () {
             context.go('/');
           },
         ),
         ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('Settings'),
+          leading: Icon(Icons.download_for_offline),
+          title: Text('Descargas'),
           onTap: () {
             // Navegar a la pantalla de configuración
             context.go('/pokemonlocal');
