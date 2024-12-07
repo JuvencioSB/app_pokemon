@@ -1,4 +1,5 @@
 import 'package:app_pokemon/module/pokemon_detalle.dart';
+import 'package:app_pokemon/ui/screen/class/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_pokemon/data/database/app_database.dart';
@@ -8,6 +9,7 @@ class PokemonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Pokémones')),
+      drawer: navigations(context),
       body: FutureBuilder<AppDatabase>(
         future: GetIt.instance.getAsync<AppDatabase>(),
         builder: (context, snapshot) {
@@ -18,7 +20,7 @@ class PokemonPage extends StatelessWidget {
           } else {
             final db = snapshot.data;
             return FutureBuilder<List<Info_pokemo>>(
-              future: db!.pokemonDao.findAllPokemons(),
+              future: db!.pokemonDao.findAllInfoPokemos(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
@@ -29,8 +31,12 @@ class PokemonPage extends StatelessWidget {
                   return ListView.builder(
                     itemCount: pokemons.length,
                     itemBuilder: (context, index) {
+                      print("Total Pokemon" + pokemons.length.toString());
                       return ListTile(
-                        title: Text(pokemons[index].nombre),
+                        subtitle: Container(
+                          child: Image.network(pokemons[index].imagen),
+                        ),
+                        title: Text(pokemons[index].nombre.toString()),
                       );
                     },
                   );

@@ -6,7 +6,7 @@ class Info_pokemo {
   String nombre;
   String imagen;
   @ignore
-  List<Type> tipos;
+  List<Type> tipos = [];
   Info_pokemo(
       {required this.nombre, required this.imagen, required this.tipos});
 
@@ -15,7 +15,7 @@ class Info_pokemo {
     //print(json.data['sprites']["other"]["dream_world"]["front_default"]);
     List<Type> Temp_Tipos = [];
     for (var element in json.data["types"]) {
-      Temp_Tipos.add(Type.obtener(element));
+      Temp_Tipos.add(Type.obtener(element, json.data["name"]));
       //print(element["type"]["name"].toString());
     }
     return Info_pokemo(
@@ -32,11 +32,16 @@ class Info_pokemo {
 
 @Entity(tableName: 'type')
 class Type {
-  @primaryKey
+  @PrimaryKey(autoGenerate: true)
+  final int? id;
+  String pokemon;
   String tipo;
-  Type(this.tipo);
+  Type(this.id, this.tipo, this.pokemon);
 
-  factory Type.obtener(dynamic data) {
-    return Type(data["type"]["name"].toString());
+  factory Type.obtener(dynamic data, dynamic pokemon) {
+    return Type(0, data["type"]["name"].toString(), pokemon);
+  }
+  Future<Map<String, dynamic>> toJson() async {
+    return {'nombre': pokemon, 'type': tipo};
   }
 }

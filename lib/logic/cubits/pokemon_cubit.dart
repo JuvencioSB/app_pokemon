@@ -30,12 +30,14 @@ class PokemonCubit extends Cubit<PokemonState> {
     }
   }
 
-  void saveInfoPokemo(Info_pokemo infoPokemo) async {
+  void saveInfoPokemo(Info_pokemo infoPokemo, List<Type> tipos) async {
     try {
       await repository.saveInfoPokemo(infoPokemo);
+      for (var tipo in tipos) {
+        await repository.savetype(tipo);
+      }
       final infoPokemos = await repository.getPokemons();
       emit(PokemonLoaded(infoPokemos));
-      print("Seguardo el pokemon");
     } catch (e) {
       emit(PokemonError(e.toString()));
     }

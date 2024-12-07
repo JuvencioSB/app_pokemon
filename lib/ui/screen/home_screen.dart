@@ -1,10 +1,13 @@
 import 'package:app_pokemon/logic/cubits/pokemon_cubit.dart';
 import 'package:app_pokemon/logic/states/pokemon_state.dart';
+import 'package:app_pokemon/ui/screen/class/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final pokemonCubit = GetIt.instance<PokemonCubit>();
@@ -15,6 +18,7 @@ class HomeScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('Pokemon App'),
           ),
+          drawer: navigations(context),
           body: Center(
             child: BlocBuilder<PokemonCubit, PokemonState>(
               bloc: pokemonCubit,
@@ -33,9 +37,9 @@ class HomeScreen extends StatelessWidget {
                         ),
                         title: Text(state.pokemons[index].nombre),
                         onTap: () {
-                          context
-                              .read<PokemonCubit>()
-                              .saveInfoPokemo(state.pokemons[index]);
+                          context.read<PokemonCubit>().saveInfoPokemo(
+                              state.pokemons[index],
+                              state.pokemons[index].tipos);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
                                   '${state.pokemons[index].nombre} guardado')));

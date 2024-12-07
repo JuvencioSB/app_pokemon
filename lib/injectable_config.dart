@@ -11,4 +11,5 @@ void configureDependencies() => $initGetIt(getIt);
 void setup() {
   getIt.registerSingletonAsync<AppDatabase>(
       () async => await AppDatabase.create());
+  print("se registro la base de datos");
 }

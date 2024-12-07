@@ -1,4 +1,3 @@
-import 'package:app_pokemon/data/database/app_database.dart';
 import 'package:app_pokemon/ui/screen/home_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app_pokemon/ui/screen/pokemonpage.dart';
@@ -8,6 +7,7 @@ import 'package:app_pokemon/injectable_config.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
+
   await getIt.allReady();
   configureDependencies(); // Inicializa las dependencias
   runApp(MyApp());
@@ -33,10 +33,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) => HomeScreen(),
     ),
     GoRoute(
-      path: '/pokemon',
-      builder: (context, state) {
-        return PokemonPage();
-      },
+      path: '/pokemonlocal',
+      builder: (context, state) => PokemonPage(),
     ),
   ],
 );

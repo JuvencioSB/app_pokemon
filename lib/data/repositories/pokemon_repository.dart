@@ -42,12 +42,19 @@ class PokemonRepository {
     await infoPokemoDao.insertPokemon(infoPokemos);
   }*/
   Future<void> saveInfoPokemo(Info_pokemo infoPokemo) async {
-    print(infoPokemo.nombre.toString());
     final infoPokemoDao = _database.pokemonDao;
-    await infoPokemoDao.insertPokemon(infoPokemo);
+    await infoPokemoDao.insertInfoPokemo(infoPokemo);
+
+    print(infoPokemo.nombre.toString());
+  }
+
+  Future<void> savetype(Type tipo) async {
+    final typo = _database.pokemonDao;
+    await typo.insertType(tipo);
+    print(tipo.pokemon.toString());
   }
 
   Future<List<Info_pokemo>> getPokemonsFromDatabase() async {
-    return await _database.pokemonDao.findAllPokemons();
+    return await _database.pokemonDao.findAllInfoPokemos();
   }
 }

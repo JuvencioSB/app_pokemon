@@ -61,7 +61,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  PokemonDao? _pokemonDaoInstance;
+  InfoPokemoDao? _pokemonDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -87,7 +87,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `info_pokemo` (`nombre` TEXT NOT NULL, `imagen` TEXT NOT NULL, PRIMARY KEY (`nombre`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `type` (`tipo` TEXT NOT NULL, PRIMARY KEY (`tipo`))');
+            'CREATE TABLE IF NOT EXISTS `type` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `pokemon` TEXT NOT NULL, `tipo` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -96,13 +96,13 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  PokemonDao get pokemonDao {
-    return _pokemonDaoInstance ??= _$PokemonDao(database, changeListener);
+  InfoPokemoDao get pokemonDao {
+    return _pokemonDaoInstance ??= _$InfoPokemoDao(database, changeListener);
   }
 }
 
-class _$PokemonDao extends PokemonDao {
-  _$PokemonDao(
+class _$InfoPokemoDao extends InfoPokemoDao {
+  _$InfoPokemoDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
@@ -113,13 +113,13 @@ class _$PokemonDao extends PokemonDao {
                   'nombre': item.nombre,
                   'imagen': item.imagen
                 }),
-        _info_pokemoDeletionAdapter = DeletionAdapter(
+        _typeInsertionAdapter = InsertionAdapter(
             database,
-            'info_pokemo',
-            ['nombre'],
-            (Info_pokemo item) => <String, Object?>{
-                  'nombre': item.nombre,
-                  'imagen': item.imagen
+            'type',
+            (Type item) => <String, Object?>{
+                  'id': item.id,
+                  'pokemon': item.pokemon,
+                  'tipo': item.tipo
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -130,11 +130,11 @@ class _$PokemonDao extends PokemonDao {
 
   final InsertionAdapter<Info_pokemo> _info_pokemoInsertionAdapter;
 
-  final DeletionAdapter<Info_pokemo> _info_pokemoDeletionAdapter;
+  final InsertionAdapter<Type> _typeInsertionAdapter;
 
   @override
-  Future<List<Info_pokemo>> findAllPokemons() async {
-    return _queryAdapter.queryList('SELECT * FROM Pokemon',
+  Future<List<Info_pokemo>> findAllInfoPokemos() async {
+    return await _queryAdapter.queryList('SELECT * FROM info_pokemo',
         mapper: (Map<String, Object?> row) => Info_pokemo(
             nombre: row['nombre'] as String,
             imagen: row['imagen'] as String,
@@ -142,13 +142,32 @@ class _$PokemonDao extends PokemonDao {
   }
 
   @override
-  Future<void> insertPokemon(Info_pokemo pokemon) async {
-    await _info_pokemoInsertionAdapter.insert(
-        pokemon, OnConflictStrategy.abort);
+  Future<List<Type>> findTypesForPokemon(String pokemon) async {
+    return await _queryAdapter.queryList(
+        'SELECT * FROM type WHERE pokemon = ?1',
+        mapper: (Map<String, Object?> row) => Type(
+            row['id'] as int?, row['tipo'] as String, row['pokemon'] as String),
+        arguments: [pokemon]);
   }
 
   @override
-  Future<void> deletePokemon(Info_pokemo pokemon) async {
-    await _info_pokemoDeletionAdapter.delete(pokemon);
+  Future<void> deleteAllInfoPokemos() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM info_pokemo');
+  }
+
+  @override
+  Future<void> deleteAllTypes() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM type');
+  }
+
+  @override
+  Future<void> insertInfoPokemo(Info_pokemo infoPokemo) async {
+    await _info_pokemoInsertionAdapter.insert(
+        infoPokemo, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> insertType(Type type) async {
+    await _typeInsertionAdapter.insert(type, OnConflictStrategy.abort);
   }
 }

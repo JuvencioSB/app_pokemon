@@ -2,13 +2,17 @@ import 'package:app_pokemon/module/pokemon_detalle.dart';
 import 'package:floor/floor.dart';
 
 @dao
-abstract class PokemonDao {
-  @Query('SELECT * FROM Pokemon')
-  Future<List<Info_pokemo>> findAllPokemons();
-
+abstract class InfoPokemoDao {
+  @Query('SELECT * FROM info_pokemo')
+  Future<List<Info_pokemo>> findAllInfoPokemos();
+  @Query('SELECT * FROM type WHERE pokemon = :pokemon')
+  Future<List<Type>> findTypesForPokemon(String pokemon);
   @insert
-  Future<void> insertPokemon(Info_pokemo pokemon);
-
-  @delete
-  Future<void> deletePokemon(Info_pokemo pokemon);
+  Future<void> insertInfoPokemo(Info_pokemo infoPokemo);
+  @insert
+  Future<void> insertType(Type type);
+  @Query('DELETE FROM info_pokemo')
+  Future<void> deleteAllInfoPokemos();
+  @Query('DELETE FROM type')
+  Future<void> deleteAllTypes();
 }
