@@ -7,7 +7,7 @@ import 'package:app_pokemon/injectable_config.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
-
+  await getIt.allReady();
   configureDependencies(); // Inicializa las dependencias
   runApp(MyApp());
 }

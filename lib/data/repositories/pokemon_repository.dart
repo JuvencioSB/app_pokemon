@@ -56,11 +56,12 @@ class PokemonRepository {
 
   Future<List<Info_pokemo>> getPokemonsFromDatabase() async {
     final pokemonesList = await _database.pokemonDao.findAllInfoPokemos();
-
+    List<Info_pokemo> retorno = [];
     for (var pokemon in pokemonesList) {
       pokemon.tipos =
           await _database.pokemonDao.findTypesForPokemon(pokemon.nombre);
+      retorno.add(pokemon);
     }
-    return pokemonesList;
+    return retorno;
   }
 }
