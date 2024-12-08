@@ -39,14 +39,6 @@ class PokemonPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                onTap: () {
-                  context
-                      .read<PokemonCubit>()
-                      .saveInfoPokemo(infoPokemo, infoPokemo.tipos);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${infoPokemo.nombre} guardado')),
-                  );
-                },
               );
             },
           );
