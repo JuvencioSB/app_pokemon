@@ -134,7 +134,7 @@ class _$InfoPokemoDao extends InfoPokemoDao {
 
   @override
   Future<List<Info_pokemo>> findAllInfoPokemos() async {
-    return await _queryAdapter.queryList('SELECT * FROM info_pokemo',
+    return _queryAdapter.queryList('SELECT * FROM info_pokemo',
         mapper: (Map<String, Object?> row) => Info_pokemo(
             nombre: row['nombre'] as String,
             imagen: row['imagen'] as String,
@@ -143,8 +143,7 @@ class _$InfoPokemoDao extends InfoPokemoDao {
 
   @override
   Future<List<Type>> findTypesForPokemon(String pokemon) async {
-    return await _queryAdapter.queryList(
-        'SELECT * FROM type WHERE pokemon = ?1',
+    return _queryAdapter.queryList('SELECT * FROM type WHERE pokemon = ?1',
         mapper: (Map<String, Object?> row) => Type(
             row['id'] as int?, row['tipo'] as String, row['pokemon'] as String),
         arguments: [pokemon]);

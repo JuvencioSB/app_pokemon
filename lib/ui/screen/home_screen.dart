@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         create: (context) => pokemonCubit,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Pokemon App'),
+            title: const Text('Pokemon App'),
           ),
           drawer: navigations(context),
           body: Center(
@@ -24,37 +24,44 @@ class HomeScreen extends StatelessWidget {
               bloc: pokemonCubit,
               builder: (context, state) {
                 if (state is PokemonInitial) {
-                  return Text('Presiona el botón para cargar Pokémon');
+                  return const Text('Presiona el botón para cargar Pokémon');
                 } else if (state is PokemonLoading) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (state is PokemonLoaded) {
                   return ListView.builder(
                     itemCount: state.pokemons.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        subtitle: Container(
-                          child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/carga.gif',
-                            image: state.pokemons[index].imagen,
-                            fadeInDuration: Duration(seconds: 4),
-                          ),
+                        leading: FadeInImage.assetNetwork(
+                          placeholder: 'assets/carga.gif',
+                          width: 150,
+                          image: state.pokemons[index].imagen,
+                          fadeInDuration: const Duration(seconds: 3),
                         ),
                         title: Text(state.pokemons[index].nombre),
-                        onTap: () {
-                          context.read<PokemonCubit>().saveInfoPokemo(
-                              state.pokemons[index],
-                              state.pokemons[index].tipos);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  '${state.pokemons[index].nombre} guardado')));
-                        },
+                        subtitle: Container(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shadowColor: Colors.amber,
+                                backgroundColor: Colors.amberAccent),
+                            onPressed: () {
+                              context.read<PokemonCubit>().saveInfoPokemo(
+                                  state.pokemons[index],
+                                  state.pokemons[index].tipos);
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      '${state.pokemons[index].nombre} guardado')));
+                            },
+                            child: const Text("Descargar"),
+                          ),
+                        ),
                       );
                     },
                   );
                 } else if (state is PokemonError) {
                   return Text('Error: ${state.message}');
                 } else {
-                  return Text('Estado desconocido');
+                  return const Text('Estado desconocido');
                 }
               },
             ),
@@ -63,7 +70,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               pokemonCubit.CargarPokemons();
             },
-            child: Icon(Icons.refresh),
+            child: const Icon(Icons.refresh),
           ),
         ));
   }

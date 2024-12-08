@@ -13,7 +13,7 @@ Widget navigations(
             color: Colors.blue,
           ),
           child: Text(
-            'Drawer Header',
+            'Menu',
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,

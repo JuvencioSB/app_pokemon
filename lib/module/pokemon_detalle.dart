@@ -2,7 +2,7 @@ import 'package:floor/floor.dart';
 
 @Entity(tableName: 'info_pokemo')
 class Info_pokemo {
-  @primaryKey
+  @PrimaryKey()
   String nombre;
   String imagen;
   @ignore
@@ -39,7 +39,7 @@ class Type {
   Type(this.id, this.tipo, this.pokemon);
 
   factory Type.obtener(dynamic data, dynamic pokemon) {
-    return Type(0, data["type"]["name"].toString(), pokemon);
+    return Type(null, data["type"]["name"].toString(), pokemon.toString());
   }
   Future<Map<String, dynamic>> toJson() async {
     return {'nombre': pokemon, 'type': tipo};

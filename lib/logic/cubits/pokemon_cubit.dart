@@ -20,10 +20,10 @@ class PokemonCubit extends Cubit<PokemonState> {
     }
   }
 
-  void loadLocalInfoPokemos() async {
+  Future<void> loadLocalInfoPokemos() async {
     try {
       emit(PokemonLoading());
-      final infoPokemos = await repository.getPokemons();
+      final infoPokemos = await repository.getPokemonsFromDatabase();
       emit(PokemonLoaded(infoPokemos));
     } catch (e) {
       emit(PokemonError(e.toString()));
@@ -34,6 +34,7 @@ class PokemonCubit extends Cubit<PokemonState> {
     try {
       await repository.saveInfoPokemo(infoPokemo);
       for (var tipo in tipos) {
+        print(tipo.tipo);
         await repository.savetype(tipo);
       }
       final infoPokemos = await repository.getPokemons();

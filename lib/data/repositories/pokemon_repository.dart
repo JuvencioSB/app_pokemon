@@ -51,16 +51,28 @@ class PokemonRepository {
   Future<void> savetype(Type tipo) async {
     final typo = _database.pokemonDao;
     await typo.insertType(tipo);
-    print(tipo.pokemon.toString());
+    print("Se insertos el tipo del pokemon " +
+        tipo.pokemon.toString() +
+        " " +
+        tipo.tipo.toString());
   }
 
   Future<List<Info_pokemo>> getPokemonsFromDatabase() async {
-    final pokemonesList = await _database.pokemonDao.findAllInfoPokemos();
+    final data = await _database.pokemonDao;
+    final pokemonesList = await data.findAllInfoPokemos();
+    print(pokemonesList.length.toString() + "datos recojidos");
     List<Info_pokemo> retorno = [];
     for (var pokemon in pokemonesList) {
       pokemon.tipos =
           await _database.pokemonDao.findTypesForPokemon(pokemon.nombre);
       retorno.add(pokemon);
+      print(pokemon.nombre + "se agrgo el tipo");
+      for (var datospoke in retorno) {
+        print("El pokemon es " + datospoke.nombre);
+        for (var type in datospoke.tipos) {
+          print("El tipo de es: " + type.tipo);
+        }
+      }
     }
     return retorno;
   }
