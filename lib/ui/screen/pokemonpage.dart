@@ -15,6 +15,7 @@ class PokemonPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Pokémon Locales'),
       ),
+      drawer: navigations(context),
       body: BlocBuilder<PokemonCubit, PokemonState>(builder: (context, state) {
         if (state is PokemonInitial) {
           return Center(child: Text('Cargando Pokémon...'));
