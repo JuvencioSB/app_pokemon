@@ -6,11 +6,12 @@ import 'package:app_pokemon/ui/screen/pokemonpage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pokemon/injectable_config.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setup();
-  await getIt.allReady();
+  //setup();
+
   configureDependencies(); // Inicializa las dependencias
+  await getIt.allReady();
   runApp(const MyApp());
 }
 
@@ -37,9 +38,11 @@ class MyApp extends StatelessWidget {
 final GoRouter router = GoRouter(
   routes: [
     GoRoute(
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-    ),
+        path: '/',
+        builder: (context, state) => BlocProvider(
+              create: (context) => getIt<PokemonCubit>(),
+              child: HomeScreen(),
+            )),
     GoRoute(
       path: '/pokemonlocal',
       builder: (context, state) => BlocProvider(

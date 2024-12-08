@@ -6,11 +6,11 @@ import 'injectable_config.config.dart';
 final GetIt getIt = GetIt.instance;
 
 @InjectableInit()
-void configureDependencies() => $initGetIt(getIt);
+void configureDependencies() async => $initGetIt(getIt);
 
-void setup() {
+/*void setup() {
   getIt.registerSingletonAsync<AppDatabase>(
       () async => await AppDatabase.create());
 
   print("se registro la base de datos");
-}
+}*/

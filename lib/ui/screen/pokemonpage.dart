@@ -1,10 +1,8 @@
-import 'package:app_pokemon/injectable_config.dart';
 import 'package:app_pokemon/logic/cubits/pokemon_cubit.dart';
 import 'package:app_pokemon/logic/states/pokemon_state.dart';
 import 'package:app_pokemon/ui/screen/class/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class PokemonPage extends StatelessWidget {
   @override
@@ -13,7 +11,7 @@ class PokemonPage extends StatelessWidget {
     context.read<PokemonCubit>().loadLocalInfoPokemos();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pokémon Locales'),
+        title: const Text('Descargados'),
       ),
       drawer: navigations(context),
       body: BlocBuilder<PokemonCubit, PokemonState>(builder: (context, state) {
@@ -29,11 +27,16 @@ class PokemonPage extends StatelessWidget {
               return ListTile(
                 title: Text(infoPokemo.nombre),
                 subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.network(infoPokemo.imagen),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    FadeInImage.assetNetwork(
+                      placeholder: 'assets/carga.gif',
+                      width: 150,
+                      image: state.pokemons[index].imagen,
+                      fadeInDuration: const Duration(seconds: 3),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: infoPokemo.tipos
                           .map((type) => Text(type.tipo))
                           .toList(),

@@ -29,6 +29,8 @@ _i1.GetIt $initGetIt(
     environmentFilter,
   );
   final dioService = _$DioService();
+  gh.singletonAsync<_i6.AppDatabase>(
+      () async => await _i6.AppDatabase.create());
   gh.lazySingleton<_i3.Dio>(() => dioService.dio);
   gh.factory<_i4.ApiService>(() => _i4.ApiService(get<_i3.Dio>()));
   gh.factory<_i5.PokemonRepository>(() => _i5.PokemonRepository(

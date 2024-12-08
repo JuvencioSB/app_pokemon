@@ -1,17 +1,16 @@
+import 'package:app_pokemon/injectable_config.dart';
 import 'package:app_pokemon/logic/cubits/pokemon_cubit.dart';
 import 'package:app_pokemon/logic/states/pokemon_state.dart';
 import 'package:app_pokemon/ui/screen/class/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final pokemonCubit = GetIt.instance<PokemonCubit>();
-
+    final pokemonCubit = getIt<PokemonCubit>();
     return BlocProvider(
         create: (context) => pokemonCubit,
         child: Scaffold(
@@ -36,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                           placeholder: 'assets/carga.gif',
                           width: 150,
                           image: state.pokemons[index].imagen,
-                          fadeInDuration: const Duration(seconds: 3),
+                          fadeInDuration: const Duration(seconds: 4),
                         ),
                         title: Text(state.pokemons[index].nombre),
                         subtitle: Container(
