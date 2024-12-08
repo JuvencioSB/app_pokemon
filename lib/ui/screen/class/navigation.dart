@@ -21,15 +21,15 @@ Widget navigations(
           ),
         ),
         ListTile(
-          leading: Icon(Icons.home),
-          title: Text('Inicio'),
+          leading: const Icon(Icons.home),
+          title: const Text('Inicio'),
           onTap: () {
             context.go('/');
           },
         ),
         ListTile(
-          leading: Icon(Icons.download_for_offline),
-          title: Text('Descargas'),
+          leading: const Icon(Icons.download_for_offline),
+          title: const Text('Descargas'),
           onTap: () {
             // Navegar a la pantalla de configuración
             context.go('/pokemonlocal');

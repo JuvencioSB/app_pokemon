@@ -1,6 +1,8 @@
 import 'package:app_pokemon/data/repositories/pokemon_repository.dart';
 import 'package:app_pokemon/logic/states/pokemon_state.dart';
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_pokemon/module/pokemon_detalle.dart';
 
@@ -10,6 +12,7 @@ class PokemonCubit extends Cubit<PokemonState> {
 
   PokemonCubit(this.repository) : super(PokemonInitial());
 
+  // ignore: non_constant_identifier_names
   void CargarPokemons() async {
     try {
       emit(PokemonLoading());
@@ -34,7 +37,9 @@ class PokemonCubit extends Cubit<PokemonState> {
     try {
       await repository.saveInfoPokemo(infoPokemo);
       for (var tipo in tipos) {
-        print(tipo.tipo);
+        if (kDebugMode) {
+          print(tipo.tipo);
+        }
         await repository.savetype(tipo);
       }
       final infoPokemos = await repository.getPokemons();
@@ -49,7 +54,9 @@ class PokemonCubit extends Cubit<PokemonState> {
     try {
       List<Info_pokemo> func = await repository.getPokemons();
     } catch (e) {
-      print("No funciono el metodo imprimir datos" + e.toString());
+      if (kDebugMode) {
+        print("No funciono el metodo imprimir datos$e");
+      }
     }
   }
 }

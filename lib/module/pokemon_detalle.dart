@@ -1,6 +1,7 @@
 import 'package:floor/floor.dart';
 
 @Entity(tableName: 'info_pokemo')
+// ignore: camel_case_types
 class Info_pokemo {
   @PrimaryKey()
   String nombre;
@@ -13,16 +14,16 @@ class Info_pokemo {
   factory Info_pokemo.fromJson(dynamic json) {
     //print(json.data['name']);
     //print(json.data['sprites']["other"]["dream_world"]["front_default"]);
-    List<Type> Temp_Tipos = [];
+    List<Type> tempTipos = [];
     for (var element in json.data["types"]) {
-      Temp_Tipos.add(Type.obtener(element, json.data["name"]));
+      tempTipos.add(Type.obtener(element, json.data["name"]));
       //print(element["type"]["name"].toString());
     }
     return Info_pokemo(
         imagen: json.data['sprites']["other"]["official-artwork"]
             ["front_default"],
         nombre: json.data['name'],
-        tipos: Temp_Tipos);
+        tipos: tempTipos);
   }
 
   Future<Map<String, dynamic>> toJson() async {

@@ -128,6 +128,7 @@ class _$InfoPokemoDao extends InfoPokemoDao {
 
   final QueryAdapter _queryAdapter;
 
+  // ignore: non_constant_identifier_names
   final InsertionAdapter<Info_pokemo> _info_pokemoInsertionAdapter;
 
   final InsertionAdapter<Type> _typeInsertionAdapter;

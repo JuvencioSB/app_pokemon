@@ -14,6 +14,6 @@ class ApiService {
   }
 
   Future<Response> getdatos(String id) async {
-    return await _dio.get('pokemon/' + id);
+    return await _dio.get('pokemon/$id');
   }
 }

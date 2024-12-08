@@ -1,4 +1,3 @@
-import 'package:app_pokemon/data/database/app_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'injectable_config.config.dart';

@@ -26,11 +26,9 @@ class PokemonRepository {
   Future<List<Info_pokemo>> getPokemons() async {
     List<Info_pokemo> pokemons = [];
     for (int i = 1; i <= 20; i++) {
-      final response = await _apiService.getdatos(i.toString() + "/");
+      final response = await _apiService.getdatos("$i/");
       if (response.statusCode == 200) {
-        pokemons.add(await Info_pokemo.fromJson(response));
-      } else {
-        print("Error en el metodo");
+        pokemons.add(Info_pokemo.fromJson(response));
       }
     }
     return pokemons;
@@ -44,35 +42,22 @@ class PokemonRepository {
   Future<void> saveInfoPokemo(Info_pokemo infoPokemo) async {
     final infoPokemoDao = _database.pokemonDao;
     await infoPokemoDao.insertInfoPokemo(infoPokemo);
-
-    print(infoPokemo.nombre.toString());
   }
 
   Future<void> savetype(Type tipo) async {
     final typo = _database.pokemonDao;
     await typo.insertType(tipo);
-    print("Se insertos el tipo del pokemon " +
-        tipo.pokemon.toString() +
-        " " +
-        tipo.tipo.toString());
   }
 
   Future<List<Info_pokemo>> getPokemonsFromDatabase() async {
-    final data = await _database.pokemonDao;
+    final data = _database.pokemonDao;
     final pokemonesList = await data.findAllInfoPokemos();
-    print(pokemonesList.length.toString() + "datos recojidos");
+
     List<Info_pokemo> retorno = [];
     for (var pokemon in pokemonesList) {
       pokemon.tipos =
           await _database.pokemonDao.findTypesForPokemon(pokemon.nombre);
       retorno.add(pokemon);
-      print(pokemon.nombre + "se agrgo el tipo");
-      for (var datospoke in retorno) {
-        print("El pokemon es " + datospoke.nombre);
-        for (var type in datospoke.tipos) {
-          print("El tipo de es: " + type.tipo);
-        }
-      }
     }
     return retorno;
   }

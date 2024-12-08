@@ -38,21 +38,19 @@ class HomeScreen extends StatelessWidget {
                           fadeInDuration: const Duration(seconds: 4),
                         ),
                         title: Text(state.pokemons[index].nombre),
-                        subtitle: Container(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shadowColor: Colors.amber,
-                                backgroundColor: Colors.amberAccent),
-                            onPressed: () {
-                              context.read<PokemonCubit>().saveInfoPokemo(
-                                  state.pokemons[index],
-                                  state.pokemons[index].tipos);
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      '${state.pokemons[index].nombre} guardado')));
-                            },
-                            child: const Text("Descargar"),
-                          ),
+                        subtitle: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: Colors.amber,
+                              backgroundColor: Colors.amberAccent),
+                          onPressed: () {
+                            context.read<PokemonCubit>().saveInfoPokemo(
+                                state.pokemons[index],
+                                state.pokemons[index].tipos);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    '${state.pokemons[index].nombre} guardado')));
+                          },
+                          child: const Text("Descargar"),
                         ),
                       );
                     },

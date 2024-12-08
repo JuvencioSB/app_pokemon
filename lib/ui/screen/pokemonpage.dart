@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PokemonPage extends StatelessWidget {
+  const PokemonPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Cargar los Pokémon automáticamente al iniciar la pantalla
@@ -16,9 +18,9 @@ class PokemonPage extends StatelessWidget {
       drawer: navigations(context),
       body: BlocBuilder<PokemonCubit, PokemonState>(builder: (context, state) {
         if (state is PokemonInitial) {
-          return Center(child: Text('Cargando Pokémon...'));
+          return const Center(child: Text('Cargando Pokémon...'));
         } else if (state is PokemonLoading) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (state is PokemonLoaded) {
           return ListView.builder(
             itemCount: state.pokemons.length,
@@ -49,7 +51,7 @@ class PokemonPage extends StatelessWidget {
         } else if (state is PokemonError) {
           return Center(child: Text('Error: ${state.message}'));
         } else {
-          return Center(child: Text('Estado desconocido'));
+          return const Center(child: Text('Estado desconocido'));
         }
       }),
     );

@@ -41,13 +41,13 @@ final GoRouter router = GoRouter(
         path: '/',
         builder: (context, state) => BlocProvider(
               create: (context) => getIt<PokemonCubit>(),
-              child: HomeScreen(),
+              child: const HomeScreen(),
             )),
     GoRoute(
       path: '/pokemonlocal',
       builder: (context, state) => BlocProvider(
         create: (context) => getIt<PokemonCubit>(),
-        child: PokemonPage(),
+        child: const PokemonPage(),
       ),
     )
   ],
