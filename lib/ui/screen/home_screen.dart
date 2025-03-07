@@ -14,8 +14,14 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider(
         create: (context) => pokemonCubit,
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
-            title: const Text('Pokemon App'),
+            backgroundColor: Colors.red,
+            title: const Text(
+              'Pokemon App',
+              style: TextStyle(color: Colors.yellowAccent),
+            ),
+            iconTheme: const IconThemeData(color: Colors.white),
           ),
           drawer: navigations(context),
           body: Center(
@@ -33,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                       return ListTile(
                         leading: FadeInImage.assetNetwork(
                           placeholder: 'assets/carga.gif',
-                          width: 150,
+                          width: 200,
                           image: state.pokemons[index].imagen,
                           fadeInDuration: const Duration(seconds: 4),
                         ),

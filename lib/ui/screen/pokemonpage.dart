@@ -12,8 +12,14 @@ class PokemonPage extends StatelessWidget {
     // Cargar los Pokémon automáticamente al iniciar la pantalla
     context.read<PokemonCubit>().loadLocalInfoPokemos();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Descargados'),
+        backgroundColor: Colors.red,
+        title: const Text(
+          'Descargas',
+          style: TextStyle(color: Colors.yellowAccent),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: navigations(context),
       body: BlocBuilder<PokemonCubit, PokemonState>(builder: (context, state) {

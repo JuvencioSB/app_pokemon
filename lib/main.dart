@@ -9,7 +9,6 @@ import 'package:app_pokemon/injectable_config.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //setup();
-
   configureDependencies(); // Inicializa las dependencias
   await getIt.allReady();
   runApp(const MyApp());
@@ -20,18 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<PokemonCubit>(
-            create: (context) => getIt<PokemonCubit>(),
-          ),
-        ],
-        child: MaterialApp.router(
-          title: 'Pokemon app',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          routerConfig: router,
-        ));
+      providers: [
+        BlocProvider<PokemonCubit>(
+          create: (context) => getIt<PokemonCubit>(),
+        ),
+      ],
+      child: MaterialApp.router(
+        title: 'PokeInfo :)',
+        routerConfig: router,
+      ),
+    );
   }
 }
 

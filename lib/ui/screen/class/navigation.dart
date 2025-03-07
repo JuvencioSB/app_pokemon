@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Widget navigations(
+Drawer navigations(
   BuildContext context,
 ) {
   return Drawer(
@@ -10,7 +10,7 @@ Widget navigations(
       children: <Widget>[
         const DrawerHeader(
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Colors.redAccent,
           ),
           child: Text(
             'Menu',
@@ -21,14 +21,20 @@ Widget navigations(
           ),
         ),
         ListTile(
-          leading: const Icon(Icons.home),
+          leading: const Icon(
+            Icons.home,
+            color: Colors.red,
+          ),
           title: const Text('Inicio'),
           onTap: () {
             context.go('/');
           },
         ),
         ListTile(
-          leading: const Icon(Icons.download_for_offline),
+          leading: const Icon(
+            Icons.download_for_offline,
+            color: Colors.red,
+          ),
           title: const Text('Descargas'),
           onTap: () {
             // Navegar a la pantalla de configuración

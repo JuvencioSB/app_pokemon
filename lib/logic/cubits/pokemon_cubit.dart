@@ -9,14 +9,14 @@ import 'package:app_pokemon/module/pokemon_detalle.dart';
 @injectable
 class PokemonCubit extends Cubit<PokemonState> {
   final PokemonRepository repository;
-
+  int ids = 0;
   PokemonCubit(this.repository) : super(PokemonInitial());
 
   // ignore: non_constant_identifier_names
   void CargarPokemons() async {
     try {
       emit(PokemonLoading());
-      final pokemons = await repository.getPokemons();
+      final pokemons = await repository.getPokemons(ids);
       emit(PokemonLoaded(pokemons));
     } catch (e) {
       emit(PokemonError(e.toString()));
@@ -42,17 +42,29 @@ class PokemonCubit extends Cubit<PokemonState> {
         }
         await repository.savetype(tipo);
       }
-      final infoPokemos = await repository.getPokemons();
+      final infoPokemos = await repository.getPokemons(ids);
       emit(PokemonLoaded(infoPokemos));
     } catch (e) {
       emit(PokemonError(e.toString()));
     }
   }
 
+  void nextPage() {
+    ids = ids + 10;
+    CargarPokemons();
+  }
+
+  void previousPage() {
+    if (ids > 0) {
+      ids = ids - 10;
+      CargarPokemons();
+    }
+  }
+
 //Metodo para puebas
   Future<void> imprimirdatos() async {
     try {
-      List<Info_pokemo> func = await repository.getPokemons();
+      List<Info_pokemo> func = await repository.getPokemons(ids);
     } catch (e) {
       if (kDebugMode) {
         print("No funciono el metodo imprimir datos$e");
