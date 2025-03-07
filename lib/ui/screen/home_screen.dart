@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.red,
             title: const Text(
-              'Pokemon App',
+              'PokeInfo :)',
               style: TextStyle(color: Colors.yellowAccent),
             ),
             iconTheme: const IconThemeData(color: Colors.white),
@@ -33,33 +33,57 @@ class HomeScreen extends StatelessWidget {
                 } else if (state is PokemonLoading) {
                   return const CircularProgressIndicator();
                 } else if (state is PokemonLoaded) {
-                  return ListView.builder(
-                    itemCount: state.pokemons.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: FadeInImage.assetNetwork(
-                          placeholder: 'assets/carga.gif',
-                          width: 200,
-                          image: state.pokemons[index].imagen,
-                          fadeInDuration: const Duration(seconds: 4),
-                        ),
-                        title: Text(state.pokemons[index].nombre),
-                        subtitle: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shadowColor: Colors.amber,
-                              backgroundColor: Colors.amberAccent),
-                          onPressed: () {
-                            context.read<PokemonCubit>().saveInfoPokemo(
-                                state.pokemons[index],
-                                state.pokemons[index].tipos);
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    '${state.pokemons[index].nombre} guardado')));
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: state.pokemons.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: FadeInImage.assetNetwork(
+                                placeholder: 'assets/carga.gif',
+                                width: 200,
+                                image: state.pokemons[index].imagen,
+                                fadeInDuration: const Duration(seconds: 4),
+                              ),
+                              title: Text(state.pokemons[index].nombre),
+                              subtitle: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    shadowColor: Colors.amber,
+                                    backgroundColor: Colors.amberAccent),
+                                onPressed: () {
+                                  context.read<PokemonCubit>().saveInfoPokemo(
+                                      state.pokemons[index],
+                                      state.pokemons[index].tipos);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              '${state.pokemons[index].nombre} guardado')));
+                                },
+                                child: const Text("Descargar"),
+                              ),
+                            );
                           },
-                          child: const Text("Descargar"),
                         ),
-                      );
-                    },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<PokemonCubit>().previousPage();
+                            },
+                            child: const Text('Anterior'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<PokemonCubit>().nextPage();
+                            },
+                            child: const Text('Siguiente'),
+                          ),
+                        ],
+                      ),
+                    ],
                   );
                 } else if (state is PokemonError) {
                   return Text('Error: ${state.message}');
@@ -69,6 +93,8 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               pokemonCubit.CargarPokemons();

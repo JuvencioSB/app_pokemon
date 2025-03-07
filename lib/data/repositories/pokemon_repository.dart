@@ -25,8 +25,8 @@ class PokemonRepository {
 
   Future<List<Info_pokemo>> getPokemons(int ids) async {
     List<Info_pokemo> pokemons = [];
-
-    for (int i = ids; i <= ids + 10; i++) {
+    int totalid = ids + 10;
+    for (int i = ids; i <= totalid; i++) {
       final response = await _apiService.getdatos("$i/");
       if (response.statusCode == 200) {
         pokemons.add(Info_pokemo.fromJson(response));

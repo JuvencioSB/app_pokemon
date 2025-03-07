@@ -9,11 +9,11 @@ import 'package:app_pokemon/module/pokemon_detalle.dart';
 @injectable
 class PokemonCubit extends Cubit<PokemonState> {
   final PokemonRepository repository;
-  int ids = 0;
+  int ids = 1;
   PokemonCubit(this.repository) : super(PokemonInitial());
 
   // ignore: non_constant_identifier_names
-  void CargarPokemons() async {
+  Future<void> CargarPokemons() async {
     try {
       emit(PokemonLoading());
       final pokemons = await repository.getPokemons(ids);
