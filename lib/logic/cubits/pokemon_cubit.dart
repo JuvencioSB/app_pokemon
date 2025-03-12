@@ -10,12 +10,18 @@ import 'package:app_pokemon/module/pokemon_detalle.dart';
 class PokemonCubit extends Cubit<PokemonState> {
   final PokemonRepository repository;
   int ids = 1;
+  int totalCount = 0;
+  int totalPage = 0;
   PokemonCubit(this.repository) : super(PokemonInitial());
 
   // ignore: non_constant_identifier_names
   Future<void> CargarPokemons() async {
     try {
       emit(PokemonLoading());
+      if (totalCount == 0) {
+        totalCount = await repository.gettotal();
+        totalPage = (totalCount / 20).ceil();
+      }
       final pokemons = await repository.getPokemons(ids);
       emit(PokemonLoaded(pokemons));
     } catch (e) {
@@ -50,13 +56,13 @@ class PokemonCubit extends Cubit<PokemonState> {
   }
 
   void nextPage() {
-    ids = ids + 10;
+    ids = ids + 20;
     CargarPokemons();
   }
 
   void previousPage() {
     if (ids > 0) {
-      ids = ids - 10;
+      ids = ids - 20;
       CargarPokemons();
     }
   }

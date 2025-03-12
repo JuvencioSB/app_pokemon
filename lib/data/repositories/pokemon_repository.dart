@@ -25,14 +25,25 @@ class PokemonRepository {
 
   Future<List<Info_pokemo>> getPokemons(int ids) async {
     List<Info_pokemo> pokemons = [];
-    int totalid = ids + 10;
+    int totalid = ids + 20;
     for (int i = ids; i <= totalid; i++) {
-      final response = await _apiService.getdatos("$i/");
+      final response = await _apiService.getdatos("pokemon/$i/");
       if (response.statusCode == 200) {
         pokemons.add(Info_pokemo.fromJson(response));
+      } else {
+        throw Exception('Error al obtener los Pokémon');
       }
     }
     return pokemons;
+  }
+
+  Future<int> gettotal() async {
+    final response = await _apiService.getdatos("pokemon/");
+    if (response.statusCode == 200) {
+      return response.data['count'];
+    } else {
+      throw Exception('Error al obtener los Pokémon');
+    }
   }
 
   /* Future<void> saveInfoPokemos(List<Info_pokemo> infoPokemos) async {

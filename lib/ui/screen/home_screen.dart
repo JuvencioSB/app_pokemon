@@ -7,75 +7,99 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final pokemonCubit = getIt<PokemonCubit>();
     return BlocProvider(
-        create: (context) => pokemonCubit,
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.red,
-            title: const Text(
-              'PokeInfo :)',
-              style: TextStyle(color: Colors.yellowAccent),
-            ),
-            iconTheme: const IconThemeData(color: Colors.white),
+      create: (context) => pokemonCubit,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: const Text(
+            'PokeInfo :)',
+            style: TextStyle(color: Colors.yellowAccent),
           ),
-          drawer: navigations(context),
-          body: Center(
-            child: BlocBuilder<PokemonCubit, PokemonState>(
-              bloc: pokemonCubit,
-              builder: (context, state) {
-                if (state is PokemonInitial) {
-                  return const Text('Presiona el botón para cargar Pokémon');
-                } else if (state is PokemonLoading) {
-                  return const CircularProgressIndicator();
-                } else if (state is PokemonLoaded) {
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: state.pokemons.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              leading: FadeInImage.assetNetwork(
-                                placeholder: 'assets/carga.gif',
-                                width: 200,
-                                image: state.pokemons[index].imagen,
-                                fadeInDuration: const Duration(seconds: 4),
-                              ),
-                              title: Text(state.pokemons[index].nombre),
-                              subtitle: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    shadowColor: Colors.amber,
-                                    backgroundColor: Colors.amberAccent),
-                                onPressed: () {
-                                  context.read<PokemonCubit>().saveInfoPokemo(
-                                      state.pokemons[index],
-                                      state.pokemons[index].tipos);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              '${state.pokemons[index].nombre} guardado')));
-                                },
-                                child: const Text("Descargar"),
-                              ),
-                            );
-                          },
-                        ),
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
+        drawer: navigations(context),
+        body: Center(
+          child: BlocBuilder<PokemonCubit, PokemonState>(
+            bloc: pokemonCubit,
+            builder: (context, state) {
+              if (state is PokemonInitial) {
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(30),
                       ),
-                      Row(
+                      onPressed: pokemonCubit.CargarPokemons,
+                      child: const Icon(Icons.add, size: 20),
+                    ),
+                    const Text('Presiona el botón para cargar Pokémon')
+                  ],
+                );
+              } else if (state is PokemonLoading) {
+                return const CircularProgressIndicator();
+              } else if (state is PokemonLoaded) {
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: state.pokemons.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: FadeInImage.assetNetwork(
+                              placeholder: 'assets/carga.gif',
+                              width: 150,
+                              image: state.pokemons[index].imagen,
+                              fadeInDuration: const Duration(seconds: 4),
+                            ),
+                            title: Text(state.pokemons[index].nombre),
+                            subtitle: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.amber,
+                                  backgroundColor: Colors.amberAccent),
+                              onPressed: () {
+                                context.read<PokemonCubit>().saveInfoPokemo(
+                                    state.pokemons[index],
+                                    state.pokemons[index].tipos);
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        '${state.pokemons[index].nombre} guardado')));
+                              },
+                              child: const Text("Descargar"),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      color: Colors.red,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shadowColor: Colors.yellow,
+                                backgroundColor: Colors.yellowAccent),
                             onPressed: () {
                               context.read<PokemonCubit>().previousPage();
                             },
                             child: const Text('Anterior'),
                           ),
+                          Text(
+                            'Página ${(pokemonCubit.ids / 20).ceil()} de ${pokemonCubit.totalPage}',
+                            style: const TextStyle(
+                                color: Colors.amber,
+                                backgroundColor: Colors.white),
+                          ),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shadowColor: Colors.amber,
+                                backgroundColor: Colors.yellow),
                             onPressed: () {
                               context.read<PokemonCubit>().nextPage();
                             },
@@ -83,24 +107,42 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ],
-                  );
-                } else if (state is PokemonError) {
-                  return Text('Error: ${state.message}');
-                } else {
-                  return const Text('Estado desconocido');
-                }
-              },
-            ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              pokemonCubit.CargarPokemons();
+                    ),
+                  ],
+                );
+              } else if (state is PokemonError) {
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(30),
+                      ),
+                      onPressed: pokemonCubit.CargarPokemons,
+                      child: const Icon(Icons.add, size: 20),
+                    ),
+                    Text('Error: ${state.message}')
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(30),
+                      ),
+                      onPressed: pokemonCubit.CargarPokemons,
+                      child: const Icon(Icons.add, size: 20),
+                    ),
+                    const Text('Estado desconocido')
+                  ],
+                );
+              }
             },
-            child: const Icon(Icons.refresh),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
