@@ -15,7 +15,9 @@ La **App Pokémon** es una aplicación móvil desarrollada con Flutter que permi
 - **Flutter**: Framework de desarrollo multiplataforma para crear aplicaciones nativas.
 - **Dart**: Lenguaje de programación utilizado en Flutter.
 - **BLoC (Business Logic Component)**: Arquitectura para la gestión reactiva del estado.
-- **Inyección de dependencias**: Configuración mediante `injectable` para un código más modular y escalable.
+- **go_router**: Navegación declarativa y gestión de rutas.
+- **get_it**: Inyección de dependencias para un código más modular y escalable.
+- **Inyección de dependencias**: Configuración mediante `injectable` para facilitar la modularidad.
 
 ## Cómo ejecutar el proyecto
 
