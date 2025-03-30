@@ -2,6 +2,8 @@
 
 La **App Pokémon** es una aplicación móvil desarrollada con Flutter que permite a los usuarios explorar y gestionar información sobre Pokémon de manera interactiva. La aplicación está diseñada para ofrecer una experiencia fluida y atractiva, utilizando el patrón de arquitectura BLoC para la gestión eficiente del estado.
 
+Este proyecto fue desarrollado como parte de mi portafolio profesional mientras busco nuevas oportunidades laborales en el desarrollo de software. Mi objetivo es demostrar mis habilidades en Flutter, gestión de estado con BLoC, y buenas prácticas de desarrollo.
+
 ## Características principales
 
 - **Explorar Pokémon**: Obtén una lista de Pokémon con sus imágenes y detalles básicos.
@@ -9,6 +11,7 @@ La **App Pokémon** es una aplicación móvil desarrollada con Flutter que permi
 - **Guardar información**: Descarga y guarda información detallada de un Pokémon específico.
 - **Interfaz amigable**: Diseño intuitivo con botones interactivos y listas dinámicas.
 - **Selector de páginas**: Cambia rápidamente entre páginas utilizando un menú desplegable.
+- **Manejo de errores**: Controla y muestra mensajes de error amigables en caso de fallos en la carga de datos o problemas de red.
 
 ## Tecnologías y herramientas utilizadas
 
@@ -60,3 +63,9 @@ La **App Pokémon** es una aplicación móvil desarrollada con Flutter que permi
 ---
 
 ¡Explora el mundo de los Pokémon y disfruta de esta experiencia interactiva!
+
+---
+
+**Nota**: Actualmente estoy buscando empleo como desarrollador de software. Si estás interesado en mi perfil, no dudes en contactarme:
+
+- **Correo electrónico**: [juvenciohalo2@gmail.com](mailto:juvenciohalo2@gmail.com)
