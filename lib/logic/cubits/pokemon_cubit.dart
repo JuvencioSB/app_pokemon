@@ -55,6 +55,16 @@ class PokemonCubit extends Cubit<PokemonState> {
     }
   }
 
+  void selectPage(int page) {
+    if (page <= totalPage) {
+      ids = 20 * page;
+      CargarPokemons();
+      print("page: $page");
+    } else {
+      print("Page recivido $page");
+    }
+  }
+
   void nextPage() {
     ids = ids + 20;
     CargarPokemons();

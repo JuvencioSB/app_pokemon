@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is PokemonInitial) {
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(30),
                       ),
                       onPressed: pokemonCubit.CargarPokemons,
-                      child: const Icon(Icons.add, size: 20),
+                      child: const Icon(Icons.refresh, size: 20),
                     ),
                     const Text('Presiona el botón para cargar Pokémon')
                   ],
@@ -81,20 +82,69 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shadowColor: Colors.yellow,
-                                backgroundColor: Colors.yellowAccent),
-                            onPressed: () {
-                              context.read<PokemonCubit>().previousPage();
-                            },
-                            child: const Text('Anterior'),
-                          ),
-                          Text(
-                            'Página ${(pokemonCubit.ids / 20).ceil()} de ${pokemonCubit.totalPage}',
-                            style: const TextStyle(
-                                color: Colors.amber,
-                                backgroundColor: Colors.white),
+                          if (pokemonCubit.ids > 20)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.red,
+                                  backgroundColor: Colors.yellowAccent),
+                              onPressed: () {
+                                context.read<PokemonCubit>().previousPage();
+                              },
+                              child: const Text('Anterior'),
+                            ),
+                          GestureDetector(
+                            onTap: () => showBottomSheet(
+                              context: context,
+                              builder: (context) => Container(
+                                color: Colors.white,
+                                height: 400,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      color: Colors.white,
+                                      child: const Text(
+                                        'Selecciona la página',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            backgroundColor: Colors.yellow),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ListView.builder(
+                                        itemCount: pokemonCubit.totalPage,
+                                        itemBuilder: (context, index) {
+                                          return ListTile(
+                                            title: const Text(
+                                              "Pagina",
+                                              style: TextStyle(
+                                                  backgroundColor:
+                                                      Colors.white),
+                                            ),
+                                            subtitle: Center(
+                                                child: InkWell(
+                                                    onTap: () {
+                                                      context
+                                                          .read<PokemonCubit>()
+                                                          .selectPage(index);
+
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text((index + 1)
+                                                        .toString()))),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Página ${(pokemonCubit.ids / 20).ceil()} de ${pokemonCubit.totalPage}',
+                              style: const TextStyle(
+                                  color: Colors.blue,
+                                  backgroundColor: Colors.white),
+                            ),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -111,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 );
               } else if (state is PokemonError) {
-                return Column(
+                return ListView(
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -119,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(30),
                       ),
                       onPressed: pokemonCubit.CargarPokemons,
-                      child: const Icon(Icons.add, size: 20),
+                      child: const Icon(Icons.refresh, size: 20),
                     ),
                     Text('Error: ${state.message}')
                   ],
@@ -133,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(30),
                       ),
                       onPressed: pokemonCubit.CargarPokemons,
-                      child: const Icon(Icons.add, size: 20),
+                      child: const Icon(Icons.refresh, size: 20),
                     ),
                     const Text('Estado desconocido')
                   ],
