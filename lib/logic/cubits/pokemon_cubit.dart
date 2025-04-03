@@ -59,31 +59,24 @@ class PokemonCubit extends Cubit<PokemonState> {
     if (page <= totalPage) {
       ids = 20 * page;
       CargarPokemons();
-      print("page: $page");
+      if (kDebugMode) {
+        print("page: $page");
+      }
     } else {
-      print("Page recivido $page");
+      if (kDebugMode) {
+        print("Page recivido $page");
+      }
     }
-  }
 
-  void nextPage() {
-    ids = ids + 20;
-    CargarPokemons();
-  }
-
-  void previousPage() {
-    if (ids > 0) {
-      ids = ids - 20;
+    void nextPage() {
+      ids = ids + 20;
       CargarPokemons();
     }
-  }
 
-//Metodo para puebas
-  Future<void> imprimirdatos() async {
-    try {
-      List<Info_pokemo> func = await repository.getPokemons(ids);
-    } catch (e) {
-      if (kDebugMode) {
-        print("No funciono el metodo imprimir datos$e");
+    void previousPage() {
+      if (ids > 0) {
+        ids = ids - 20;
+        CargarPokemons();
       }
     }
   }
