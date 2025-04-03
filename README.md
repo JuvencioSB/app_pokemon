@@ -6,7 +6,7 @@ Este proyecto fue desarrollado como parte de mi portafolio profesional mientras 
 
 ## Características principales
 
-- **Explorar Pokémon**: Obtén una lista de Pokémon con sus imágenes y detalles básicos.
+- **Explorar Pokémon**: Obtén una lista de Pokémon con sus imágenes y detalles básicos desde una API.
 - **Paginación dinámica**: Navega fácilmente entre diferentes páginas de Pokémon.
 - **Guardar información**: Descarga y guarda información detallada de un Pokémon específico.
 - **Interfaz amigable**: Diseño intuitivo con botones interactivos y listas dinámicas.
@@ -18,6 +18,8 @@ Este proyecto fue desarrollado como parte de mi portafolio profesional mientras 
 - **Flutter**: Framework de desarrollo multiplataforma para crear aplicaciones nativas.
 - **Dart**: Lenguaje de programación utilizado en Flutter.
 - **BLoC (Business Logic Component)**: Arquitectura para la gestión reactiva del estado.
+- **dio**: Biblioteca para realizar solicitudes HTTP y manejar la conexión con la API.
+- **floor**: Biblioteca para el almacenamiento local basado en SQLite.
 - **go_router**: Navegación declarativa y gestión de rutas.
 - **get_it**: Inyección de dependencias para un código más modular y escalable.
 - **Inyección de dependencias**: Configuración mediante `injectable` para facilitar la modularidad.
@@ -55,10 +57,6 @@ Este proyecto fue desarrollado como parte de mi portafolio profesional mientras 
 - **Búsqueda inteligente**: Implementar un sistema de búsqueda por nombre o tipo.
 - **Favoritos**: Permitir a los usuarios marcar Pokémon como favoritos.
 - **Animaciones mejoradas**: Agregar transiciones y efectos visuales para una experiencia más atractiva.
-
-## Contribuciones
-
-¡Las contribuciones son bienvenidas! Si deseas colaborar, por favor abre un issue o envía un pull request con tus mejoras.
 
 ---
 
